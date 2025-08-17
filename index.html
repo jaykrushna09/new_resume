@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jaykrushna — Frontend Developer Portfolio</title>
+  <meta name="description" content="Portfolio of Your Name — Frontend Developer specializing in React, Next.js, and modern UI/UX." />
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    /* ====== Design Tokens ====== */
+    :root{
+      --bg: #0b0d10;
+      --elev: #12151a;
+      --text: #e9eef5;
+      --muted: #a8b3c7;
+      --brand: #6aa1ff;
+      --brand-2: #8b5cf6;
+      --card: #0f1217;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+      --err: #ef4444;
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --maxw: 1100px;
+      --grid-gap: 18px;
+      --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#fbfbfd; --elev:#ffffff; --text:#0e1116; --muted:#475569; --card:#ffffff; --shadow:0 8px 24px rgba(2,6,23,.08);} 
+    }
+
+    /* ====== Base ====== */
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: var(--font-sans);
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 100% -10%, rgba(107,114,128,.18), transparent 40%),
+                  radial-gradient(900px 600px at -10% 0%, rgba(99,102,241,.18), transparent 40%),
+                  var(--bg);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--maxw); margin-inline:auto; padding: 0 20px}
+
+    /* ====== Navigation ====== */
+    header{
+      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px);
+      background: rgba(15,18,23,.6);
+      border-bottom: 1px solid rgba(148,163,184,.15);
+    }
+    @media (prefers-color-scheme: light){
+      header{ background: rgba(255,255,255,.7); }
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding: 14px 0; }
+    .logo{ font-weight:700; letter-spacing:.3px; }
+    .logo b{ background: linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .nav a{ padding:8px 10px; border-radius:10px; }
+    .nav a:hover{ background: rgba(148,163,184,.12); }
+    .nav-links{ display:flex; gap: 6px; flex-wrap: wrap; }
+
+    /* ====== Hero ====== */
+    .hero{ display:grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; padding: 64px 0 30px; }
+    .tag{ display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border:1px solid rgba(148,163,184,.2); border-radius: 999px; font-size:12px; color:var(--muted); }
+    .title{ font-size: clamp(30px, 4vw, 48px); line-height: 1.15; margin: 14px 0 12px; }
+    .subtitle{ color: var(--muted); max-width: 60ch; }
+    .cta{ display:flex; gap:12px; margin-top: 18px; flex-wrap: wrap; }
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:12px 16px; border-radius: 12px; border:1px solid rgba(148,163,184,.18); background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.05)); box-shadow: var(--shadow); }
+    .btn.primary{ background: linear-gradient(90deg, var(--brand), var(--brand-2)); color: white; border: none; }
+    .btn:active{ transform: translateY(1px); }
+    .hero-card{ background: var(--card); border: 1px solid rgba(148,163,184,.12); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+    .hero-metrics{ display:grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 14px; }
+    .metric{ background: var(--elev); border:1px solid rgba(148,163,184,.12); border-radius: 12px; padding: 14px; text-align:center; }
+    .metric h3{ margin: 6px 0 0; font-size: 22px }
+    .metric p{ margin: 0; color: var(--muted); font-size: 12px }
+
+    /* ====== Sections ====== */
+    section{ padding: 54px 0 }
+    .section-title{ font-size: 22px; letter-spacing:.2px; margin: 0 0 16px }
+    .section-desc{ color:var(--muted); margin-top: -6px; }
+
+    /* ====== About ====== */
+    .about{ display:grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .about .card{ background: var(--card); border: 1px solid rgba(148,163,184,.12); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+
+    /* ====== Skills ====== */
+    .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px }
+    .chip{ padding:8px 10px; border-radius: 999px; background: rgba(148,163,184,.12); border:1px solid rgba(148,163,184,.18); font-family: var(--font-mono); font-size: 12px; }
+
+    /* ====== Projects ====== */
+    .grid{ display:grid; gap: var(--grid-gap); }
+    .projects{ grid-template-columns: repeat(12, 1fr); }
+    .project{ grid-column: span 4; background: var(--card); border:1px solid rgba(148,163,184,.14); border-radius: var(--radius); overflow: clip; box-shadow: var(--shadow); display:flex; flex-direction:column; }
+    .project .thumb{ aspect-ratio: 16/9; background: linear-gradient(120deg, rgba(106,161,255,.22), rgba(139,92,246,.22)); display:flex; align-items:center; justify-content:center; font-weight:600; letter-spacing:.3px }
+    .project .body{ padding: 14px 14px 16px }
+    .project h3{ margin: 2px 0 6px; font-size: 18px }
+    .project p{ margin: 0; color: var(--muted) }
+    .project .meta{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px }
+    .project .meta span{ font-size:12px; padding: 6px 8px; border-radius: 999px; border:1px solid rgba(148,163,184,.16); background: rgba(148,163,184,.1) }
+    .project .links{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; padding: 12px 14px; border-top:1px dashed rgba(148,163,184,.14) }
+    .project .links a{ font-weight:600; }
+
+    /* ====== Experience (Timeline) ====== */
+    .timeline{ position:relative; padding-left: 24px; }
+    .timeline:before{ content:""; position:absolute; left: 8px; top: 4px; bottom: 4px; width:2px; background: linear-gradient(var(--brand), var(--brand-2)); border-radius:2px }
+    .item{ position:relative; padding: 10px 0 16px }
+    .bullet{ position:absolute; left: -24px; top: 14px; width: 18px; height: 18px; border-radius:50%; background: var(--elev); border: 2px solid var(--brand); box-shadow: 0 0 0 4px rgba(106,161,255,.15) }
+    .item h4{ margin: 0 0 6px }
+    .item small{ color: var(--muted) }
+
+    /* ====== Contact ====== */
+    form{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--card); border:1px solid rgba(148,163,184,.12); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+    label{ display:grid; gap:6px; font-size:14px }
+    input, textarea{ width:100%; padding: 12px 12px; background: var(--elev); border:1px solid rgba(148,163,184,.22); color:var(--text); border-radius: 10px; font: inherit }
+    textarea{ min-height: 120px; grid-column: 1 / -1 }
+    .form-row{ grid-column: 1 / -1; display:flex; gap:12px; justify-content:flex-end }
+
+    /* ====== Footer ====== */
+    footer{ padding: 36px 0; color: var(--muted); }
+    .foot{ display:flex; gap: 12px; align-items:center; justify-content:space-between; flex-wrap:wrap }
+    .social a{ padding:8px 10px; border-radius:10px; border:1px solid rgba(148,163,184,.18) }
+
+    /* ====== Responsive ====== */
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+      .about{ grid-template-columns: 1fr; }
+      .hero-card{ order: -1 }
+      .hero-metrics{ grid-template-columns: repeat(3,1fr); }
+      .projects .project{ grid-column: span 6; }
+      form{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px){
+      .projects .project{ grid-column: span 12; }
+      .hero-metrics{ grid-template-columns: repeat(3,1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <!-- <div class="logo" aria-label="Site logo"><b>YN</b> · Portfolio</div> -->
+       <!-- <div class="logo" aria-label="Site logo"><b>Jaykrushna</b> · Developer</div> -->
+        <div class="logo" aria-label="Site logo">Jaykrushna<b> Das</b></div>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <!-- <a href="#projects">Projects</a> -->
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ====== HERO ====== -->
+    <section class="hero" id="home">
+      <div>
+        <span class="tag">Available for freelance · Remote</span>
+        <h1 class="title">Hi, I'm <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Jaykrushna</span> Frontend Developer</h1>
+        <p class="subtitle">I help teams deliver beautiful, accessible, and scalable web experiences using React, Next.js, and TypeScript.</p>
+        <div class="cta">
+          <!-- <a class="btn primary" href="#projects">See Projects</a> -->
+          <a class="btn" href="#contact">Contact Me</a>
+          <a class="btn" href="./jaykrushna_das_resume.pdf" download>Download CV</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Profile summary">
+        <div style="display:flex; gap:12px; align-items:center">
+           <img 
+    src="./pic2.jpg" 
+    alt="Jaykrushna Das" 
+    style="width:56px; height:56px; border-radius:50%; object-fit:cover;" 
+  />
+          <div>
+            <strong>Jaykrushna Das</strong>
+            <div style="color:var(--muted); font-size:14px">Frontend Developer · India,Bengaluru</div>
+          </div>
+        </div>
+        <div class="hero-metrics">
+          <div class="metric">
+            <h3>4+</h3>
+            <p>Years Exp.</p>
+          </div>
+          <!-- <div class="metric">
+            <h3>25+</h3>
+            <p>Projects</p>
+          </div>
+          <div class="metric">
+            <h3>5 ⭐</h3>
+            <p>Client Rating</p>
+          </div> -->
+        </div>
+      </aside>
+    </section>
+
+    <!-- ====== ABOUT ====== -->
+    <section id="about">
+      <h2 class="section-title">About</h2>
+      <p class="section-desc">I build performant UIs with clean, maintainable code and a strong eye for detail. I enjoy turning complex problems into delightful user experiences.</p>
+      <div class="about">
+        <div class="card">
+          <h3>What I Do</h3>
+          <ul>
+            <li>Design and implement responsive, accessible interfaces</li>
+            <li>Build component libraries and design systems</li>
+            <li>Integrate REST/GraphQL APIs and CMSs</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Highlights</h3>
+          <ul>
+            <li>Improved Core Web Vitals (LCP/CLS) to green across pages</li>
+            <li>Shipped multilingual sites with dynamic CMS content</li>
+            <li>Mentored devs on React patterns and testing</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== SKILLS ====== -->
+    <section id="skills">
+      <h2 class="section-title">Skills</h2>
+      <div class="chips">
+        <span class="chip">HTML5</span>
+        <span class="chip">CSS3</span>
+        <span class="chip">SCSS</span>
+        <span class="chip">JavaScript (ES2023)</span>
+        <span class="chip">TypeScript</span>
+        <span class="chip">React(Vite)</span>
+        <span class="chip">Redux-Toolkit</span>
+        <span class="chip">Next.js</span>
+        <span class="chip">Node.js</span>
+        <span class="chip">Express.js</span>
+        <span class="chip">MongoDB</span>
+        <!-- <span class="chip">Accessibility (a11y)</span> -->
+        <span class="chip">Jest</span>
+        <span class="chip">Azure Devops</span>
+        <span class="chip">Jira</span>
+      </div>
+    </section>
+
+    <!-- ====== PROJECTS ====== -->
+    <!-- <section id="projects">
+      <h2 class="section-title">Projects</h2>
+      <p class="section-desc">A few selected works. Replace screenshots and links with your own.</p>
+      <div class="grid projects">
+        <article class="project">
+          <div class="thumb">Project Cover</div>
+          <div class="body">
+            <h3>Project One</h3>
+            <p>Lightweight e‑commerce storefront optimized for Core Web Vitals.</p>
+            <div class="meta">
+              <span>Next.js</span><span>Stripe</span><span>Vercel</span>
+            </div>
+          </div>
+          <div class="links">
+            <a href="#">Live Demo →</a>
+            <a href="#">Source ↗</a>
+          </div>
+        </article>
+        <article class="project">
+          <div class="thumb">Project Cover</div>
+          <div class="body">
+            <h3>Project Two</h3>
+            <p>Headless CMS blog with dynamic i18n and MDX content pipelines.</p>
+            <div class="meta">
+              <span>Next.js</span><span>Sitecore</span><span>MDX</span>
+            </div>
+          </div>
+          <div class="links">
+            <a href="#">Live Demo →</a>
+            <a href="#">Source ↗</a>
+          </div>
+        </article>
+        <article class="project">
+          <div class="thumb">Project Cover</div>
+          <div class="body">
+            <h3>Project Three</h3>
+            <p>Interactive map showing schools within 15km radius using Google Maps.</p>
+            <div class="meta">
+              <span>React</span><span>Maps API</span><span>GeoJSON</span>
+            </div>
+          </div>
+          <div class="links">
+            <a href="#">Live Demo →</a>
+            <a href="#">Source ↗</a>
+          </div>
+        </article>
+      </div>
+    </section> -->
+
+    <!-- ====== EXPERIENCE ====== -->
+    <section id="experience">
+      <h2 class="section-title">Experience</h2>
+      <div class="timeline">
+        <div class="item">
+          <div class="bullet" aria-hidden="true"></div>
+          <h4>Senior Frontend Developer · Speridian Technologies</h4>
+          <small>2021 — Present · Hybrid</small> 
+          <p>Developed responsive, high-performance applications with Tailwind CSS, Material UI, SSR/SSG, caching, and lazy loading, while leveraging Redux Toolkit, Context API, and robust API integrations using Node.js, Express.js, and MongoDB.</p>
+        </div>
+
+        <!-- <div class="item">
+          <div class="bullet" aria-hidden="true"></div>
+          <h4>Frontend Developer · Company Name</h4>
+          <small>2021 — 2023 · Bangalore, IN</small>
+          <p>Built customer onboarding flows, increased conversion by 12% through A/B tested UI iterations.</p>
+        </div>
+        <div class="item">
+          <div class="bullet" aria-hidden="true"></div>
+          <h4>Junior Web Developer · Company Name</h4>
+          <small>2019 — 2021 · Pune, IN</small>
+          <p>Delivered responsive marketing sites and landing pages, collaborating closely with designers.</p>
+        </div> -->
+        
+      </div>
+    </section>
+
+    <!-- ====== CONTACT ====== -->
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-desc">Have a project in mind? Let's talk.</p>
+      <!-- Replace action with your backend endpoint or use mailto:your@email.com -->
+      <form action="#" method="post">
+        <label>
+          Name
+          <input type="text" name="name" placeholder="Your Name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" placeholder="you@example.com" required />
+        </label>
+        <label style="grid-column: 1 / -1">
+          Message
+          <textarea name="message" placeholder="Tell me about your project…" required></textarea>
+        </label>
+        <div class="form-row">
+          <button class="btn primary" type="submit">Send Message</button>
+          <a class="btn" href="mailto:you@example.com">Email Instead</a>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>© <span id="year"></span> Jaykrushna Das. All rights reserved.</div>
+      <div class="social" aria-label="Social links">
+        <a href="https://github.com/" target="_blank" aria-label="GitHub">GitHub</a>
+        <a href="https://www.linkedin.com/in/jaykrushna-das-156609216" target="_blank" aria-label="LinkedIn">LinkedIn</a>
+        <a href="https://x.com/DasJaykrushna?t=Ve38djttfE4crF3xZf2DnA&s=08" target="_blank" aria-label="Twitter">Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Tiny inline JS-free year fallback (noscript alternative shown) -->
+  <noscript>Enable JavaScript to auto-update the year.</noscript>
+  <script>
+    // Optional: if JS is allowed, auto-update the year. Remove this whole script block if you truly want no JS at all.
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
