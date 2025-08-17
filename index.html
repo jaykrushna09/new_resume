@@ -59,9 +59,24 @@
       background: rgba(15,18,23,.6);
       border-bottom: 1px solid rgba(148,163,184,.15);
     }
-    @media (prefers-color-scheme: light){
+    header .nav-container {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between; 
+  flex-wrap: wrap; 
+  gap: 1rem; 
+  padding: 0.75rem 1rem;
+}
+
+header .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;  
+  flex-wrap: wrap; 
+}
+    /* @media (prefers-color-scheme: light){
       header{ background: rgba(255,255,255,.7); }
-    }
+    } */
     .nav{ display:flex; align-items:center; justify-content:space-between; padding: 14px 0; }
     .logo{ font-weight:700; letter-spacing:.3px; }
     .logo b{ background: linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
@@ -147,9 +162,7 @@
 </head>
 <body>
   <header>
-    <div class="container nav">
-      <!-- <div class="logo" aria-label="Site logo"><b>YN</b> · Portfolio</div> -->
-       <!-- <div class="logo" aria-label="Site logo"><b>Jaykrushna</b> · Developer</div> -->
+    <div class="nav-container">
         <div class="logo" aria-label="Site logo">Jaykrushna<b> Das</b></div>
 
       <nav class="nav-links" aria-label="Primary">
